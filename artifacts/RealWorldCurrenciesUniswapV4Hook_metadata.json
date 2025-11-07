@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/HookContract.sol": "RealWorldCurrenciesUniswapV4Hook"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/HookContract.sol": {
+			"keccak256": "0xbd06cc97aeee7e699cf0e1278f4a416dd7222e1565794838cf3fe301ebda1dc3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a25cd70092a56b1d11f692069f0a1e61266b8ae746ba99f0868b85a99371bc49",
+				"dweb:/ipfs/QmcWwcWRjubKLbBpPVfUoz9TxyKfLp9XYvpKGX6G4K3Y1S"
+			]
+		}
+	},
+	"version": 1
+}
