@@ -7,7 +7,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 // hook contract
 contract RealWorldCurrenciesUniswapV4Hook {
 
-int256 public LatestEuroPriceIndex;
+int256 public LatestEuroPrice;
 
 address private ContractAddress = 0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910;
 
@@ -18,7 +18,7 @@ string public Currencies = "EUR / USD";
 function GetDataFromChainlink () public {
     AggregatorV3Interface EuroPrice = AggregatorV3Interface (ContractAddress);
     (,int256 answer,,,) = EuroPrice.latestRoundData();
-    LatestEuroPriceIndex = answer;
+    LatestEuroPrice = answer; // / 10e18;
     }
 
 //// Can be used to read the latest data fetched

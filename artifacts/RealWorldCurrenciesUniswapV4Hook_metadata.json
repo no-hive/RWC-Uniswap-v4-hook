@@ -27,7 +27,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "LatestEuroPriceIndex",
+				"name": "LatestEuroPrice",
 				"outputs": [
 					{
 						"internalType": "int256",
@@ -75,11 +75,11 @@
 			]
 		},
 		"contracts/HookContract.sol": {
-			"keccak256": "0x0763fa6df453b893ed41cbacf6aadf64a56ebb423044ff1978116e40b683d6af",
+			"keccak256": "0x8c93f6c13c39146474d36b188708eff8de7a0e6d22642a5ae668e54753b8ded0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://53cada08737084ac18f31b565a38ddbe4c805b553afc34e823867596dc1df94a",
-				"dweb:/ipfs/QmbRava7w8NscWkMbmuohfEZ2cKF2KiY139gvxeA8MkEvJ"
+				"bzz-raw://cdf105743dfcd3edf56314a6a5b6097b14b46e7e0479605f94dc6a67b1503f7b",
+				"dweb:/ipfs/QmWNGagMoZd6QoacAvyzBSGDqe6R4XqjkUxj2SU9MQdzjn"
 			]
 		}
 	},
