@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"getrealprices.sol": "GetRealPricesOfCurrencies"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"getrealprices.sol": {
+			"keccak256": "0xfa3dddf903fd2566bf5fc1175433b2069c5373e5541bac3d0f0bb14de28f717e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://40be96f96d8914363079c0bf3ac6bd1a4e16e53ec4f7d2c86a76df51d0221df3",
+				"dweb:/ipfs/QmUgFyzgp6jc3tLaJpxY4veqBzTSWatCy4Bnxr8ir4XdrM"
+			]
+		}
+	},
+	"version": 1
+}
