@@ -4,7 +4,41 @@
 	},
 	"language": "Solidity",
 	"output": {
-		"abi": [],
+		"abi": [
+			{
+				"inputs": [],
+				"name": "Currencies",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "GetDataFromChainlink",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "LatestEuroPriceIndex",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
 		"devdoc": {
 			"kind": "dev",
 			"methods": {},
@@ -32,12 +66,20 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/HookContract.sol": {
-			"keccak256": "0xbd06cc97aeee7e699cf0e1278f4a416dd7222e1565794838cf3fe301ebda1dc3",
+		"@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol": {
+			"keccak256": "0x257a8d28fa83d3d942547c8e129ef465e4b5f3f31171e7be4739a4c98da6b4f0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a25cd70092a56b1d11f692069f0a1e61266b8ae746ba99f0868b85a99371bc49",
-				"dweb:/ipfs/QmcWwcWRjubKLbBpPVfUoz9TxyKfLp9XYvpKGX6G4K3Y1S"
+				"bzz-raw://6d39e11b1dc7b9b8ccdabbc9be442ab7cda4a81c748f57e316dcb1bcb4a28bf9",
+				"dweb:/ipfs/QmaG6vz6W6iEUBsbHSBob5mdcitYxWjoygxREHpsJHfWrS"
+			]
+		},
+		"contracts/HookContract.sol": {
+			"keccak256": "0x0763fa6df453b893ed41cbacf6aadf64a56ebb423044ff1978116e40b683d6af",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://53cada08737084ac18f31b565a38ddbe4c805b553afc34e823867596dc1df94a",
+				"dweb:/ipfs/QmbRava7w8NscWkMbmuohfEZ2cKF2KiY139gvxeA8MkEvJ"
 			]
 		}
 	},

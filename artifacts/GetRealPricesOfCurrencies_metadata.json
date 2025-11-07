@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"getrealprices.sol": "GetRealPricesOfCurrencies"
+			"contracts/GetRealPrices.sol": "GetRealPricesOfCurrencies"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -32,12 +32,20 @@
 		"remappings": []
 	},
 	"sources": {
-		"getrealprices.sol": {
-			"keccak256": "0xfa3dddf903fd2566bf5fc1175433b2069c5373e5541bac3d0f0bb14de28f717e",
+		"@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol": {
+			"keccak256": "0x257a8d28fa83d3d942547c8e129ef465e4b5f3f31171e7be4739a4c98da6b4f0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://40be96f96d8914363079c0bf3ac6bd1a4e16e53ec4f7d2c86a76df51d0221df3",
-				"dweb:/ipfs/QmUgFyzgp6jc3tLaJpxY4veqBzTSWatCy4Bnxr8ir4XdrM"
+				"bzz-raw://6d39e11b1dc7b9b8ccdabbc9be442ab7cda4a81c748f57e316dcb1bcb4a28bf9",
+				"dweb:/ipfs/QmaG6vz6W6iEUBsbHSBob5mdcitYxWjoygxREHpsJHfWrS"
+			]
+		},
+		"contracts/GetRealPrices.sol": {
+			"keccak256": "0xfcff7d1f5e9a48a8e3c65b420aafead968183fadb1a605070ea6a740f6deadb4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3a497775f134e3f110019799bd66a0ba604445b228f14f7b50ce6de57a2447a0",
+				"dweb:/ipfs/QmZhZZpkB5deAwSkSmucBfeLFqApMxQN48Teo3aTQLCRbG"
 			]
 		}
 	},
