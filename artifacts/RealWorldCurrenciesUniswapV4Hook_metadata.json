@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.19+commit.7dd6d404"
+		"version": "0.8.30+commit.73712a01"
 	},
 	"language": "Solidity",
 	"output": {
@@ -54,7 +54,7 @@
 		"compilationTarget": {
 			"contracts/HookContract.sol": "RealWorldCurrenciesUniswapV4Hook"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -75,11 +75,11 @@
 			]
 		},
 		"contracts/HookContract.sol": {
-			"keccak256": "0x8c93f6c13c39146474d36b188708eff8de7a0e6d22642a5ae668e54753b8ded0",
+			"keccak256": "0x20dc950c72483c19b3983c2e22aaae573204fabd40ff6a8a2c19dbabebe89274",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://cdf105743dfcd3edf56314a6a5b6097b14b46e7e0479605f94dc6a67b1503f7b",
-				"dweb:/ipfs/QmWNGagMoZd6QoacAvyzBSGDqe6R4XqjkUxj2SU9MQdzjn"
+				"bzz-raw://bd69b8b22f0cc002cac9d7254308e0198611db6b505a1ce7f9f8c61d0148b6b5",
+				"dweb:/ipfs/QmSfdTVDgwFB1P3oFoYYqM4onfWVNDq59KPE1jQoPK1UCK"
 			]
 		}
 	},
