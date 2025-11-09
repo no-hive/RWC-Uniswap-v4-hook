@@ -75,11 +75,11 @@
 			]
 		},
 		"contracts/HookContract.sol": {
-			"keccak256": "0x20dc950c72483c19b3983c2e22aaae573204fabd40ff6a8a2c19dbabebe89274",
+			"keccak256": "0x25cf0995a70f369d25e86522985bb0bc6f8cd8f338799e1871ddea73c0bc311a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bd69b8b22f0cc002cac9d7254308e0198611db6b505a1ce7f9f8c61d0148b6b5",
-				"dweb:/ipfs/QmSfdTVDgwFB1P3oFoYYqM4onfWVNDq59KPE1jQoPK1UCK"
+				"bzz-raw://459db365b385dbc84029efffaaccadd4a179a6c2d7e084e43b961efa61a1931d",
+				"dweb:/ipfs/Qmf8CMCYhWuNX3x4DfdWF5aAjgSFSRibvHKaFwwPqTPVbB"
 			]
 		}
 	},
