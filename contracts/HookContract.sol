@@ -43,10 +43,18 @@ function getHookPermissions() public pure override returns (Hooks.Permissions me
 // beforeSwap
 function _beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams calldata, bytes calldata)
     internal
-    override
+    override   
     returns (bytes4, BeforeSwapDelta, uint24)
     {
-    beforeSwapCount[key.toId()]++;
+    
+    price = LatestEuroPrice - 
+
+    if LatestEuroPrice > DefaultPoolPrice {bool Add = true; 
+    int256 Difference = (LatestEuroPrice - DefaultPoolPrice)}
+    else { bool Add = false; 
+    int256 Difference = (DefaultPoolPrice - LatestEuroPrice)}
+    
+    
     return (BaseHook.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
     }
     
@@ -54,6 +62,10 @@ function _beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams cal
 //
 // before_hook to fix the difference and collect proper fees + undesrtand how to rebalance later
 // after_hook to rebalance the results using transactions
+function AfterHook {
+    if bool Add = true {fee goes to swapper}
+    else fee goes to pool owner
+}
 
 // get the data from Chainlink Oracle
 function GetDataFromChainlink () public 
