@@ -3,15 +3,15 @@
 pragma solidity ^0.8.19;
 
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
-
-import // everything
+import {Hooks} from "@Uniswap/v4-core/main/src/libraries/Hooks.sol";
+import {IPoolManager} from "@Uniswap/v4-core/main/src/interfaces/IPoolManager.sol";
+import {PoolKey} from "@Uniswap/v4-core/main/src/types/PoolKey.sol";
+import {PoolIdLibrary} from "@Uniswap/v4-core/main/src/types/PoolId.sol";
+import {BalanceDelta} from "@Uniswap/v4-core/main/src/types/BalanceDelta.sol";
+import {BeforeSwapDelta} from "@Uniswap/v4-core/main/src/types/BeforeSwapDelta.sol";
 
 contract RealWorldCurrenciesUniswapV4Hook is BaseHook {
 using PoolIdLibrary for PoolKey;
-
-mapping(PoolId => uint256 count) public beforeSwapCount;
-
-mapping(PoolId => uint256 count) public afterSwapCount;
 
 constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
 
@@ -19,7 +19,7 @@ int256 public LatestEuroPrice;
 
 string public constant Currencies = "EUR / USD";
 
-// hook permissions
+// # Hook permissions
 function getHookPermissions() public pure override returns (Hooks.Permissions memory) 
         {
         return Hooks.Permissions({
@@ -33,15 +33,16 @@ function getHookPermissions() public pure override returns (Hooks.Permissions me
         afterSwap: true,
         beforeDonate: false,
         afterDonate: false,
-        beforeSwapReturnDelta: false,
-        afterSwapReturnDelta: false,
+        beforeSwapReturnDelta: true,
+        afterSwapReturnDelta: true,
         afterAddLiquidityReturnDelta: false,
         afterRemoveLiquidityReturnDelta: false
         });
         }
     
-// beforeSwap
-function _beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams calldata, bytes calldata)
+// # BeforeSwap function
+// is needed to collect proper fees + write down how to rebalance them later.
+function BeforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams calldata, bytes calldata)
     internal
     override   
     returns (bytes4, BeforeSwapDelta, uint24)
@@ -59,14 +60,19 @@ function _beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams cal
     }
     
 
-//
-// before_hook to fix the difference and collect proper fees + undesrtand how to rebalance later
-// after_hook to rebalance the results using transactions
-function AfterHook {
-    if bool Add = true {fee goes to swapper}
-    else fee goes to pool owner
-}
 
+// # AfterSwap function
+// is needed to distribute fees.
+function AfterSwap {
+    if bool Add == true {
+    adjustment = Difference
+    hookDelta = BalanceDelta(-0, +adjustment);
+    }
+    else 
+    {adjustment = Difference
+    hookDelta = BalanceDelta(+adjustment, -0);
+    }
+// # Chainlink integration
 // get the data from Chainlink Oracle
 function GetDataFromChainlink () public 
     {
@@ -76,4 +82,18 @@ function GetDataFromChainlink () public
     // 1.15676000 - the result
     }
 
+}
+
+
+BalanceDelta swapDelta = SwapMath.computeSwapStep(
+    sqrtPriceCurrent,
+    sqrtPriceTarget,
+    liquidity,
+    amountSpecified,
+    fee
+);
+
+{
+    adjustment = Difference
+    hookDelta = BalanceDelta(-0, +adjustment);
 }
