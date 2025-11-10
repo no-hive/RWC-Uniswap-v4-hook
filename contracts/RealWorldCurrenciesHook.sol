@@ -45,29 +45,30 @@ function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams call
     override   
     returns (bytes4, BeforeSwapDelta, uint24)
     {
-
     // find current price 
     (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(key.toId());
     uint256 priceQ192 = uint256(sqrtPriceX96) * uint256(sqrtPriceX96);
-    uint256 defaultPoolPrice = priceQ192 >> 192
+    int256 DefaultPoolPrice = priceQ192 >> 192;
 
     // find chainlink price
-    AggregatorV3Interface EuroPrice = AggregatorV3Interface (0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910);
-    (,int256 answer,,,) = EuroPrice.latestRoundData();
-    LatestEuroPrice = answer;
+    (, int256 answer, , , ) = AggregatorV3Interface(0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910).latestRoundData();
+    int256 LatestEuroPrice = (answer * 1e10);
 
+    // BeforeSwapDelta definition
+    BeforeSwapDelta delta;
     if (LatestEuroPrice > DefaultPoolPrice)
     {
         int256 priceDiff = (LatestEuroPrice - DefaultPoolPrice);
-        int256 specifiedAdjustment = (priceDiff * absSpecified) / int256(poolPrice) / 1e18;
-        return specifiedAdjustment;
+        delta = BeforeSwapDelta({deltaX: priceDiff, deltaY: 0});
         }
     else 
     { 
         int256 priceDiff = (DefaultPoolPrice - LatestEuroPrice);
-        int256 specifiedAdjustment = (priceDiff * absSpecified) / int256(poolPrice) / 1e18;
-        return specifiedAdjustment;
+        delta = BeforeSwapDelta({deltaX: 0, deltaY: priceDiff});
         }
-BeforeSwapDelta newDelta = BeforeSwapDeltaLibrary.toBeforeSwapDelta(specifiedAdjustment, unspecifiedAdjustment);
-    }
+        return (bytes4(0), delta, 0);
 }
+}
+
+// check scaling
+// add owner opportunity to change oracle / liquidity providers can change oracle address.
