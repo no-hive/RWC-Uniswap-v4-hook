@@ -15,8 +15,6 @@ using PoolIdLibrary for PoolKey;
 
 constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
 
-int256 public LatestEuroPrice;
-
 string public constant Currencies = "EUR / USD";
 
 // # Hook permissions
@@ -30,11 +28,11 @@ function getHookPermissions() public pure override returns (Hooks.Permissions me
         beforeRemoveLiquidity: false,
         afterRemoveLiquidity: false,
         beforeSwap: true,
-        afterSwap: true,
+        afterSwap: false,
         beforeDonate: false,
         afterDonate: false,
         beforeSwapReturnDelta: true,
-        afterSwapReturnDelta: true,
+        afterSwapReturnDelta: false,
         afterAddLiquidityReturnDelta: false,
         afterRemoveLiquidityReturnDelta: false
         });
@@ -42,58 +40,34 @@ function getHookPermissions() public pure override returns (Hooks.Permissions me
     
 // # BeforeSwap function
 // is needed to collect proper fees + write down how to rebalance them later.
-function BeforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams calldata, bytes calldata)
+function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams calldata, bytes calldata)
     internal
     override   
     returns (bytes4, BeforeSwapDelta, uint24)
     {
-    
-    price = LatestEuroPrice - 
 
-    if LatestEuroPrice > DefaultPoolPrice {bool Add = true; 
-    int256 Difference = (LatestEuroPrice - DefaultPoolPrice)}
-    else { bool Add = false; 
-    int256 Difference = (DefaultPoolPrice - LatestEuroPrice)}
-    
-    
-    return (BaseHook.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
-    }
-    
+    // find current price 
+    (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(key.toId());
+    uint256 priceQ192 = uint256(sqrtPriceX96) * uint256(sqrtPriceX96);
+    uint256 defaultPoolPrice = priceQ192 >> 192
 
-
-// # AfterSwap function
-// is needed to distribute fees.
-function AfterSwap {
-    if bool Add == true {
-    adjustment = Difference
-    hookDelta = BalanceDelta(-0, +adjustment);
-    }
-    else 
-    {adjustment = Difference
-    hookDelta = BalanceDelta(+adjustment, -0);
-    }
-// # Chainlink integration
-// get the data from Chainlink Oracle
-function GetDataFromChainlink () public 
-    {
+    // find chainlink price
     AggregatorV3Interface EuroPrice = AggregatorV3Interface (0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910);
     (,int256 answer,,,) = EuroPrice.latestRoundData();
-    LatestEuroPrice = (answer / 10e7) ;
-    // 1.15676000 - the result
+    LatestEuroPrice = answer;
+
+    if (LatestEuroPrice > DefaultPoolPrice)
+    {
+        int256 priceDiff = (LatestEuroPrice - DefaultPoolPrice);
+        int256 specifiedAdjustment = (priceDiff * absSpecified) / int256(poolPrice) / 1e18;
+        return specifiedAdjustment;
+        }
+    else 
+    { 
+        int256 priceDiff = (DefaultPoolPrice - LatestEuroPrice);
+        int256 specifiedAdjustment = (priceDiff * absSpecified) / int256(poolPrice) / 1e18;
+        return specifiedAdjustment;
+        }
+BeforeSwapDelta newDelta = BeforeSwapDeltaLibrary.toBeforeSwapDelta(specifiedAdjustment, unspecifiedAdjustment);
     }
-
-}
-
-
-BalanceDelta swapDelta = SwapMath.computeSwapStep(
-    sqrtPriceCurrent,
-    sqrtPriceTarget,
-    liquidity,
-    amountSpecified,
-    fee
-);
-
-{
-    adjustment = Difference
-    hookDelta = BalanceDelta(-0, +adjustment);
 }
