@@ -77,7 +77,11 @@ function updateOracleAddress(address _newOracleAddress) external onlyOwner {
     Oracle_Address = _newOracleAddress;
 }
 
+modifier onlyOwner() {
+    require(msg.sender == owner, "Only the owner can call this function");
+    _;
 }
 
+}
 // check scaling
 // add owner opportunity to change oracle / liquidity providers can change oracle address.
