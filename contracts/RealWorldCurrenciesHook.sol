@@ -13,9 +13,12 @@ import {BeforeSwapDelta} from "@Uniswap/v4-core/main/src/types/BeforeSwapDelta.s
 contract RealWorldCurrenciesUniswapV4Hook is BaseHook {
 using PoolIdLibrary for PoolKey;
 
-constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
+constructor(IPoolManager _poolManager) BaseHook(_poolManager);
+address Oracle_Address = 0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910;
 
 string public constant Currencies = "EUR / USD";
+
+address public Oracle_Address;
 
 // # Hook permissions
 function getHookPermissions() public pure override returns (Hooks.Permissions memory) 
@@ -51,7 +54,7 @@ function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams call
     int256 DefaultPoolPrice = priceQ192 >> 192;
 
     // find chainlink price
-    (, int256 answer, , , ) = AggregatorV3Interface(0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910).latestRoundData();
+    (, int256 answer, , , ) = AggregatorV3Interface(Oracle_Address).latestRoundData();
     int256 LatestEuroPrice = (answer * 1e10);
 
     // BeforeSwapDelta definition
@@ -68,6 +71,12 @@ function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams call
         }
         return (bytes4(0), delta, 0);
 }
+
+// update Oracle Address
+function updateOracleAddress(address _newOracleAddress) external onlyOwner {
+    Oracle_Address = _newOracleAddress;
+}
+
 }
 
 // check scaling
