@@ -15,8 +15,8 @@ using PoolIdLibrary for PoolKey;
 
 constructor(IPoolManager _poolManager) BaseHook(_poolManager)
 {
-address Oracle_Address = 0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910;
-msg.sender = owner;
+Oracle_Address = 0x1a81afB8146aeFfCFc5E50e8479e826E7D55b910;
+owner = msg.sender;
 }
 
 string public constant Currencies = "EUR / USD";
@@ -58,10 +58,11 @@ function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams call
     // find current price 
     (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(key.toId());
     uint256 priceQ192 = uint256(sqrtPriceX96) * uint256(sqrtPriceX96);
-    int256 DefaultPoolPrice = priceQ192 >> 192;
+    int256 DefaultPoolPrice = (priceQ192 * 1e18) >> 192;
 
     // find chainlink price
     (, int256 answer, , , ) = AggregatorV3Interface(Oracle_Address).latestRoundData();
+    require(answer > 0, "Invalid oracle price");
     int256 LatestEuroPrice = (answer * 1e10);
 
     // BeforeSwapDelta definition
