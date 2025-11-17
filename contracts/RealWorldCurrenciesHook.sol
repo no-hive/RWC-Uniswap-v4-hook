@@ -41,7 +41,7 @@ function getHookPermissions() public pure override returns (Hooks.Permissions me
         afterSwap: false,
         beforeDonate: false,
         afterDonate: false,
-        beforeSwapReturnDelta: true,
+        beforeSwapReturnDelta: false,
         afterSwapReturnDelta: false,
         afterAddLiquidityReturnDelta: false,
         afterRemoveLiquidityReturnDelta: false
@@ -51,14 +51,14 @@ function getHookPermissions() public pure override returns (Hooks.Permissions me
 // # BeforeSwap function
 // is needed to collect proper fees + write down how to rebalance them later.
 function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams calldata, bytes calldata)
-    internal
+    external
     override   
     returns (bytes4, BeforeSwapDelta, uint24)
     {
     // find current price 
     (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(key.toId());
     uint256 priceQ192 = uint256(sqrtPriceX96) * uint256(sqrtPriceX96);
-    int256 DefaultPoolPrice = (priceQ192 * 1e18) >> 192;
+    int256 DefaultPoolPrice = int256((priceQ192 * 1e18) >> 192);
 
     // find chainlink price
     (, int256 answer, , , ) = AggregatorV3Interface(Oracle_Address).latestRoundData();
