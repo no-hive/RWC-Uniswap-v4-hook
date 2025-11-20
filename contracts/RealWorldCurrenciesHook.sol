@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.24;
 
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
-import {Hooks} from "@Uniswap/v4-core/main/src/libraries/Hooks.sol";
-import {IPoolManager} from "@Uniswap/v4-core/main/src/interfaces/IPoolManager.sol";
-import {PoolKey} from "@Uniswap/v4-core/main/src/types/PoolKey.sol";
-import {PoolIdLibrary} from "@Uniswap/v4-core/main/src/types/PoolId.sol";
-import {BalanceDelta} from "@Uniswap/v4-core/main/src/types/BalanceDelta.sol";
-import {BeforeSwapDelta} from "@Uniswap/v4-core/main/src/types/BeforeSwapDelta.sol";
+import {Hooks} from "@uniswap/v4-core/src/libraries/Hooks.sol";
+import {BaseHook} from "@uniswap/v4-periphery/src/utils/BaseHook.sol";
+import {IPoolManager} from "@uniswap/v4-core/src/interfaces/IPoolManager.sol";
+import {PoolKey} from "@uniswap/v4-core/src/types/PoolKey.sol";
+import {PoolIdLibrary} from "@uniswap/v4-core/src/types/PoolId.sol";
+import {BeforeSwapDelta} from "@uniswap/v4-core/src/types/BeforeSwapDelta.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract RealWorldCurrenciesUniswapV4Hook is BaseHook {
 using PoolIdLibrary for PoolKey;
@@ -56,9 +56,11 @@ function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams call
     returns (bytes4, BeforeSwapDelta, uint24)
     {
     // find current price 
-    (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(key.toId());
+    (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(key.toId()); // StateLibrary.getSlot0 ???
+    // maybe change for params call.
     uint256 priceQ192 = uint256(sqrtPriceX96) * uint256(sqrtPriceX96);
-    int256 DefaultPoolPrice = int256((priceQ192 * 1e18) >> 192);
+    int256 DefaultPoolPrice = int256((priceQ192 * 1e18) >> 96);
+    //
 
     // find chainlink price
     (, int256 answer, , , ) = AggregatorV3Interface(Oracle_Address).latestRoundData();
@@ -77,7 +79,7 @@ function beforeSwap (address, PoolKey calldata key, IPoolManager.SwapParams call
         int256 priceDiff = (DefaultPoolPrice - LatestEuroPrice);
         delta = BeforeSwapDelta({deltaX: 0, deltaY: priceDiff});
         }
-        return (bytes4(0), delta, 0);
+        return (bytes4(0), delta, 0); // return is probably wrong
 }
 
 // update Oracle Address
@@ -94,3 +96,5 @@ modifier onlyOwner() {
 }
 // check scaling
 // add owner opportunity to change oracle / liquidity providers can change oracle address.
+
+
