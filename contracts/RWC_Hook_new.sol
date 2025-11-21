@@ -77,20 +77,36 @@ event SwapAdjustmentsCompleted();
 /// SWAP FUNCTIONS ///
 
 /* comment */
+function swap_using_chainlink_prices
+
+{
+
+// 1. do the get_chainlink_price function
+emit event OraclePriceGot();
+
+// 2. do the get_swap_amount function
+emit event SwapAmountGot();
+
+// 3. make the calculations in a right way
+
+}
+
+/* comment */
 function get_chainlink_price
 
 /* comment */
 function get_swap_amount
 
 /* comment */
-function swap_using_chainlink_prices
+function change_oracle_address
 
 /* comment */
-function change_oracle_address
+function getHookPermissions
 
 /// HOOK MANAGEMENT FUNCTIONS ///
 
-function getHookPermissions
+/* comment */
+function change_oracle_address
 
 /// MODIFIERS ///
 
