@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EUR/USD — курс</title>
+  <style>
+    :root{
+      --pink-50:#fff1f6;
+      --pink-100:#ffe4ef;
+      --pink-200:#ffcfe3;
+      --pink-400:#ff5aa5;
+      --pink-600:#d81b75;
+      --text:#3a1b2a;
+      --muted:#7a4b62;
+      --border:rgba(216,27,117,.18);
+      --shadow: 0 12px 30px rgba(216,27,117,.12);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px 16px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 20% 10%, var(--pink-100), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, #ffffff, transparent 55%),
+        linear-gradient(180deg, #ffffff 0%, var(--pink-50) 100%);
+    }
+    .card{
+      width:100%;
+      max-width:560px;
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:22px 22px 18px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Лого-слот */
+    .logo-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:14px;
+    }
+    .logo-slot{
+      width:160px;
+      height:64px;
+      border-radius:16px;
+      border:1px dashed rgba(216,27,117,.35);
+      background: linear-gradient(180deg, #fff 0%, var(--pink-50) 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .logo-slot img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      padding:10px;
+      display:block;
+    }
+    .logo-slot .placeholder{
+      font-size:12px;
+      color:var(--muted);
+      padding:8px 10px;
+      text-align:center;
+      line-height:1.2;
+    }
+
+    h1{
+      margin:0 0 12px;
+      font-size:22px;
+      letter-spacing:.2px;
+      text-align:center;
+      color:var(--pink-600);
+    }
+
+    .rows{
+      margin-top:8px;
+      border:1px solid rgba(216,27,117,.12);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(255,241,246,.55);
+    }
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 14px;
+      border-top:1px solid rgba(216,27,117,.10);
+    }
+    .row:first-child{ border-top:0; }
+    .label{ color:var(--muted); }
+    .value{
+      font-variant-numeric: tabular-nums;
+      font-weight:700;
+      color:var(--text);
+    }
+
+    .meta{
+      margin-top:12px;
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .status{
+      margin-top:10px;
+      font-size:13px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(216,27,117,.16);
+      background:rgba(255,241,246,.7);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+    }
+    .ok{ color:#0a7a2f; font-weight:600; }
+    .bad{ color:#b00020; font-weight:600; }
+
+    button{
+      margin-top:12px;
+      width:100%;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(216,27,117,.25);
+      background: linear-gradient(180deg, #fff 0%, var(--pink-100) 100%);
+      color:var(--pink-600);
+      font-weight:700;
+      cursor:pointer;
+    }
+    button:hover{ filter:brightness(.98); }
+    button:active{ transform: translateY(1px); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo-wrap">
+      <div class="logo-slot">
+        <!-- Просто положи logo1.png рядом с index.html -->
+        <img id="logoImg" src="./logo1.png" alt="Логотип"
+             onerror="this.remove(); document.getElementById('logoPh').style.display='block';">
+        <div id="logoPh" class="placeholder" style="display:none;">Слот для логотипа<br>logo1.png</div>
+      </div>
+    </div>
+
+    <h1>Курс EUR/USD</h1>
+
+    <div class="rows">
+      <div class="row">
+        <div class="label">1 EUR → USD</div>
+        <div class="value" id="eurusd">—</div>
+      </div>
+      <div class="row">
+        <div class="label">1 USD → EUR</div>
+        <div class="value" id="usdeur">—</div>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div>Источник: exchangerate.host</div>
+      <div>Обновление: раз в <span id="intervalLabel">60</span> минут</div>
+    </div>
+
+    <div class="status">
+      <div id="statusText">Загрузка…</div>
+      <div id="statusMark" class="ok" style="display:none;">OK</div>
+    </div>
+
+    <div class="meta">
+      <div>Последнее обновление: <span id="updatedAt">—</span></div>
+    </div>
+
+    <button id="refreshBtn">Обновить сейчас</button>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
